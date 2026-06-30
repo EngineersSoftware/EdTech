@@ -1,0 +1,63 @@
+// Configuracion para MongoDB
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+}
+
+// Usamos ID especial ObjectId
+model User {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    email String @unique
+    password String
+    fullName String
+    createAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    skillIds String[] @db.ObjectId
+    skills UserSkill[]
+    sessions MentorshipSessions[]
+    wallet Wallet?
+}
+
+model Skill {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String @unique
+}
+
+model UserSkill {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    userId String @db.ObjectId
+    skillId String @db.ObjectId
+    level String
+    user User @relation(fields: [userId], references: [id])
+}
+
+model MentorshipSessions {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    mentorId String @db.ObjectId
+    studentId String @db.ObjectId
+    status String
+    scheduleAt DateTime
+    mentor User @relation(fields: [mentorId], references: [id])
+    createAt DateTime @default(now())
+}
+
+model Wallet {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    userId String @unique @db.ObjectId
+    balance Int @default(0)
+    user User @relation(fields: [userId], references: [id])
+    transactions Transaction[]
+}
+
+model Transaction {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    walletId String @db.ObjectId
+    amount Int 
+    reason String
+    createAt DateTime @default(now())
+    wallet Wallet @relation(fields: [walletId], references: [id])
+}
