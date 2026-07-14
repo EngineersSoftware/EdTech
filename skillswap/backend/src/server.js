@@ -1,11 +1,10 @@
-import dotenv from "dotenv";
 import app from "./app.js";
+import { config } from "./config/env.js";
 
-dotenv.config();
-const PORT = process.env.PORT || 3000;
-
-const server = app.listen(PORT, () => {
-  console.log(`Servidor ejecutandose en el puerto ${PORT} en modo desarrollo`);
+const server = app.listen(config.port, () => {
+  console.log(
+    `Servidor ejecutándose en el puerto ${config.port} en modo ${config.env}.`,
+  );
 });
 
 process.on("unhandledRejection", (err) => {
