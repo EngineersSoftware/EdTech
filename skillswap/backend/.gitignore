@@ -1,8 +1,11 @@
-# Environment variables
+# Logs
+log/
+logs/
+*.log
+npm-debug.log*
+
+# Dependencias
+node_modules/
+
+# Variables de entorno
 .env
-
-# node modules
-node_modules
-
-# package lock
-package-lock.json

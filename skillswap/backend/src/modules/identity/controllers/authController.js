@@ -1,6 +1,6 @@
 import { authService } from '../services/authService.js';
 import { catchAsync } from '../../../common/catchAsync.js';
-import { HTTP_STATUS } from '../../../constants/index.js';
+import { HTTP_STATUS } from '../../../constans/index.js';
 
 export const registerUser = catchAsync(async (req, res, next) => {
     const { fullName, email, password } = req.body;
